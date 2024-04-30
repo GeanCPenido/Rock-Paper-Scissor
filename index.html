@@ -78,6 +78,25 @@
             }
         }
 
+        function playGame () {
+            for (let i = 0; i < 5; i++) {
+                if (humanChoice != "Error! Invalid valor!") {
+                    playRound()
+                } else {
+                    i--;
+                }
+                
+            }
+
+            if (humanScore > computerScore) {
+                alert("Congrtulations you won! Score: " + "You = " + humanScore + " Computer = " + computerScore)
+            } else if (computerScore > humanScore) {
+                alert("Pity! You lose! Score: " + "You = " + humanScore + " Computer = " + computerScore)
+            } else {
+                alert("It was a draw! Score: " + "You = " + humanScore + " Computer = " + computerScore);
+            }
+        }
+
     </script>
 
 </head>
