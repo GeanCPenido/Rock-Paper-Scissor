@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <script>
+    
+    <script defer>
         console.log("Hello World!");
 
         let computerChoice = "";
         let humanChoice = "";
+        let match = "";
 
         let humanScore = 0;
         let computerScore = 0;
@@ -17,21 +18,23 @@
         function getComputerChoice () {
             let numChoice = Math.floor(Math.random() * 10);
             
-
-            if (numChoice < 3) {
-                console.log("Rock")
+            if (3 % numChoice == 0) {
                 return computerChoice = "rock"
-            } else if (numChoice > 6) {
-                console.log("Scissor")
+            } else if (2 % numChoice == 0) {
                 return computerChoice = "scissor"
             } else {
-                console.log('Paper')
                 return computerChoice = "paper";
             }
         }
 
 
-        function getHumanChoice () {
+        const getHumanChoice = btns.forEach((button) => {
+            button.addEventListener("click", () => {
+                return humanChoice = button.id;
+            });
+        });
+        
+        /* {
             let userChoice = prompt("Rock-Paper-Scissor");
             
 
@@ -45,57 +48,96 @@
                 alert("Error! Invalid valor!")
                 return getHumanChoice();
             }
-        }
+        } */
 
         function playRound () {
 
-            getHumanChoice();
+            // getHumanChoice;
             getComputerChoice();
             
 
             if (humanChoice === "rock" && computerChoice === "scissor") {
-                alert("You won! Rock smash Scissor!") 
-                return humanScore++
+                return humanScore++ 
+                match = "You won! Rock smash scissor!"
             } else if (humanChoice === "scissor" && computerChoice === "paper") {
-                alert("You won! Scissor cuts Paper!") 
                 return humanScore++
+                match = "You won! Scissor cuts paper!"
             } else if (humanChoice === "paper" && computerChoice === "rock") {
-                alert("You won! Paper covers Rock!") 
                 return humanScore++
+                match = "You won! Paper covers rock!"
 
             }  else if (computerChoice === "rock" && humanChoice === "scissor") {
-                alert("You lose! Rock smash Scissor!")
                 return computerScore++
+                match = "You lose! Rock smash scissor!"
             } else if (computerChoice === "scissor" && humanChoice === "paper") {
-                alert("You lose! Scissor cuts Paper!")
                 return computerScore++
+                match = "You lose! Scissor cuts paper!"
             } else if (computerChoice === "paper" && humanChoice === "rock") {
-                alert("You lose! Paper covers Rock!")
-                return computerScore++;
+                return computerScore++
+                match = "You lose! Paper covers rock!"
 
             } else {
-                alert("Draw! You both choose the same value!")
+                return match = "Draw!";
+            };
+
+            switch (humanScore, computerScore) {
+                case humanScore == 5:
+                    match = "Victory! You won 5 rounds!";
+                    break;
+                case computerScore == 5:
+                    match = "Defeat! You lose 5 rounds!";
             }
         }
 
-        function playGame () {
-            for (let i = 0; i < 5; i++) {
-                if (humanChoice != "Error! Invalid valor!") {
-                    playRound()
-                } else {
-                    i--;
-                }
-                
-            }
+        
 
-            if (humanScore > computerScore) {
-                alert("Congrtulations you won! Score: " + "You = " + humanScore + " Computer = " + computerScore)
-            } else if (computerScore > humanScore) {
-                alert("Pity! You lose! Score: " + "You = " + humanScore + " Computer = " + computerScore)
-            } else {
-                alert("It was a draw! Score: " + "You = " + humanScore + " Computer = " + computerScore);
-            }
-        }
+        const container = document.createElement("div");
+        btnBox.setAttribute("id", "container");
+        btnBox.onClick = playRound;
+        body.appendChild(container);
+
+        const rock = document.createElement("button");
+        rock.setAttribute("id", "rock");
+        rock.classList.add("btn");
+        rock.textContent = "Rock";
+        container.appendChild(rock);
+
+        const paper = document.createElement("button");
+        paper.setAttribute("id", "paper");
+        paper.classList.add("btn");
+        paper.textContent = "Paper";
+        container.appendChild(paper);
+
+        const scissor = document.createElement("button");
+        scissor.setAttribute("id", "scissor");
+        scissor.classList.add("btn");
+        scissor.textContent = "Scissor";
+        container.appendChild(scissor);
+
+        const btns = document.querySelectorAll(".btn");
+        btns.onClick = playRound;
+
+
+        const results = document.createElement("div");
+        results.setAttribute("id", "results");
+
+        const matchResult = document.createElement("h2");
+        matchResult.setAttribute("id", "matchResult");
+        results.appendChild(matchResult);
+
+        const choices = document.createElement("p");
+        choices.setAttribute("id", "choices");
+        choices.textContent = "Your choice: " + humanChoice +
+        "   Computer choice: " + computerChoice;
+        results.appendChild(choices);
+
+        const scores = document.createElement("p");
+        scores.setAttribute("id", "scores");
+        scores.textContent = "Your score: " + humanScore +
+        "   Computer score: " + computerScore;
+        results.appendChild(scores);
+
+        
 
     </script>
 
