@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Document</title>    
     
-    <script defer>
+    <script>
         console.log("Hello World!");
+
+        const container = document.createElement("div");
+        container.setAttribute("id", "container");
+        container.onClick = playRound;
+
+        const rock = document.createElement("button");
+        rock.setAttribute("id", "rock");
+        rock.classList.add("btn");
+        rock.textContent = "Rock";
+        container.appendChild(rock);
+
+        const paper = document.createElement("button");
+        paper.setAttribute("id", "paper");
+        paper.classList.add("btn");
+        paper.textContent = "Paper";
+        container.appendChild(paper);
+
+        const scissor = document.createElement("button");
+        scissor.setAttribute("id", "scissor");
+        scissor.classList.add("btn");
+        scissor.textContent = "Scissor";
+        container.appendChild(scissor);
+
+        const btns = document.querySelectorAll(".btn");
+        btns.onClick = playRound;     
+
 
         let computerChoice = "";
         let humanChoice = "";
@@ -34,27 +60,10 @@
             });
         });
         
-        /* {
-            let userChoice = prompt("Rock-Paper-Scissor");
-            
-
-            if (userChoice.toLowerCase() === "rock") {
-                return humanChoice = "rock"
-            } else if (userChoice.toLowerCase() === "paper") {
-                return humanChoice = "paper"
-            } else if (userChoice.toLowerCase() === "scissor") {
-                return humanChoice = "scissor"
-            } else {
-                alert("Error! Invalid valor!")
-                return getHumanChoice();
-            }
-        } */
 
         function playRound () {
-
-            // getHumanChoice;
-            getComputerChoice();
             
+            getComputerChoice();            
 
             if (humanChoice === "rock" && computerChoice === "scissor") {
                 return humanScore++ 
@@ -88,35 +97,7 @@
                     match = "Defeat! You lose 5 rounds!";
             }
         }
-
         
-
-        const container = document.createElement("div");
-        btnBox.setAttribute("id", "container");
-        btnBox.onClick = playRound;
-        body.appendChild(container);
-
-        const rock = document.createElement("button");
-        rock.setAttribute("id", "rock");
-        rock.classList.add("btn");
-        rock.textContent = "Rock";
-        container.appendChild(rock);
-
-        const paper = document.createElement("button");
-        paper.setAttribute("id", "paper");
-        paper.classList.add("btn");
-        paper.textContent = "Paper";
-        container.appendChild(paper);
-
-        const scissor = document.createElement("button");
-        scissor.setAttribute("id", "scissor");
-        scissor.classList.add("btn");
-        scissor.textContent = "Scissor";
-        container.appendChild(scissor);
-
-        const btns = document.querySelectorAll(".btn");
-        btns.onClick = playRound;
-
 
         const results = document.createElement("div");
         results.setAttribute("id", "results");
@@ -135,9 +116,7 @@
         scores.setAttribute("id", "scores");
         scores.textContent = "Your score: " + humanScore +
         "   Computer score: " + computerScore;
-        results.appendChild(scores);
-
-        
+        results.appendChild(scores);        
 
     </script>
 
