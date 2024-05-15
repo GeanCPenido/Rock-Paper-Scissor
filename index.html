@@ -3,125 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>    
-    
-    <script>
-        console.log("Hello World!");
-
-        const container = document.createElement("div");
-        container.setAttribute("id", "container");
-        container.onClick = playRound;
-
-        const rock = document.createElement("button");
-        rock.setAttribute("id", "rock");
-        rock.classList.add("btn");
-        rock.textContent = "Rock";
-        container.appendChild(rock);
-
-        const paper = document.createElement("button");
-        paper.setAttribute("id", "paper");
-        paper.classList.add("btn");
-        paper.textContent = "Paper";
-        container.appendChild(paper);
-
-        const scissor = document.createElement("button");
-        scissor.setAttribute("id", "scissor");
-        scissor.classList.add("btn");
-        scissor.textContent = "Scissor";
-        container.appendChild(scissor);
-
-        const btns = document.querySelectorAll(".btn");
-        btns.onClick = playRound;     
-
-
-        let computerChoice = "";
-        let humanChoice = "";
-        let match = "";
-
-        let humanScore = 0;
-        let computerScore = 0;
-
-        function getComputerChoice () {
-            let numChoice = Math.floor(Math.random() * 10);
-            
-            if (3 % numChoice == 0) {
-                return computerChoice = "rock"
-            } else if (2 % numChoice == 0) {
-                return computerChoice = "scissor"
-            } else {
-                return computerChoice = "paper";
-            }
-        }
-
-
-        const getHumanChoice = btns.forEach((button) => {
-            button.addEventListener("click", () => {
-                return humanChoice = button.id;
-            });
-        });
-        
-
-        function playRound () {
-            
-            getComputerChoice();            
-
-            if (humanChoice === "rock" && computerChoice === "scissor") {
-                return humanScore++ 
-                match = "You won! Rock smash scissor!"
-            } else if (humanChoice === "scissor" && computerChoice === "paper") {
-                return humanScore++
-                match = "You won! Scissor cuts paper!"
-            } else if (humanChoice === "paper" && computerChoice === "rock") {
-                return humanScore++
-                match = "You won! Paper covers rock!"
-
-            }  else if (computerChoice === "rock" && humanChoice === "scissor") {
-                return computerScore++
-                match = "You lose! Rock smash scissor!"
-            } else if (computerChoice === "scissor" && humanChoice === "paper") {
-                return computerScore++
-                match = "You lose! Scissor cuts paper!"
-            } else if (computerChoice === "paper" && humanChoice === "rock") {
-                return computerScore++
-                match = "You lose! Paper covers rock!"
-
-            } else {
-                return match = "Draw!";
-            };
-
-            switch (humanScore, computerScore) {
-                case humanScore == 5:
-                    match = "Victory! You won 5 rounds!";
-                    break;
-                case computerScore == 5:
-                    match = "Defeat! You lose 5 rounds!";
-            }
-        }
-        
-
-        const results = document.createElement("div");
-        results.setAttribute("id", "results");
-
-        const matchResult = document.createElement("h2");
-        matchResult.setAttribute("id", "matchResult");
-        results.appendChild(matchResult);
-
-        const choices = document.createElement("p");
-        choices.setAttribute("id", "choices");
-        choices.textContent = "Your choice: " + humanChoice +
-        "   Computer choice: " + computerChoice;
-        results.appendChild(choices);
-
-        const scores = document.createElement("p");
-        scores.setAttribute("id", "scores");
-        scores.textContent = "Your score: " + humanScore +
-        "   Computer score: " + computerScore;
-        results.appendChild(scores);        
-
-    </script>
-
+    <title>Document</title>
 </head>
 <body>
     
+    <script>
+
+        // Structure the HTML
+
+        const div = document.createElement("div");
+        // Yes it must be 1 giant line otherwise it doesn't work for some reason
+        div.setAttribute("style", 'display: flex; justify-content: center; align-items: center; flex-direction: column;')
+        document.body.appendChild(div);
+
+        const rps = document.createElement("h1");
+        rps.innerText = "Rock Paper Scissors";
+
+        const playMsg = document.createElement("h2");
+        playMsg.innerText = "Let's play!";
+
+        const p = document.createElement("p");
+        p.innerText = "Make your choice:";
+
+        const ul = document.createElement("ul");
+        // Yes it must be 1 giant line otherwise it doesn't work for some reason
+        ul.insertAdjacentHTML("afterbegin", '<li><button id="rock">Rock</button></li><li><button id="paper">Paper</button></li><li><button id="scissor">Scissors</button></li>');
+
+        const result = document.createElement("p");
+
+        const finalResult = document.createElement("h1");
+
+        const scoreBox = document.createElement("ul");
+        scoreBox.insertAdjacentHTML("afterbegin", '<li>Score:</li>');        
+
+        div.append(rps, playMsg, p, ul, result, finalResult, scoreBox);
+
+        // CSS
+
+        const body = document.body;
+        body.setAttribute("style", "background-color: purple;");
+
+        const lists = document.querySelectorAll("ul");
+        lists.forEach(ul => {
+            ul.setAttribute("style", "list-style-type: none");
+        });
+
+        const btn = document.querySelectorAll("button");
+        btn.forEach(button => {
+            button.setAttribute("style", "background-color: black")
+            button.style.color = "green"
+        });
+        
+        // Game logic
+        
+        let humanScore = 0;
+        let computerScore = 0;
+
+        const score = document.createElement("li");
+        score.innerText = 'Player: ' + humanScore + '   Computer: ' + computerScore;
+        scoreBox.append(score);
+
+        btn.forEach(button => {
+            button.addEventListener("click", () => {
+                playRound(button.id, getComputerChoice());
+            })
+        });
+
+        function getComputerChoice () {
+            let pickChoice = ["rock", "paper", "scissor"];
+            let computerChoice = "";
+            return computerChoice = pickChoice[Math.floor(Math.random() * pickChoice.length)];
+        };
+
+        const playRound = (playerChoice, computerChoice) => {                        
+                       
+            if (humanScore === 5 || computerScore === 5) {
+                resetGame();
+            }
+
+            if (playerChoice === computerChoice) {
+                result.innerText = `It's a tie! You both chose ${playerChoice}.`;
+                matchResult(humanScore, computerScore);
+            }
+            else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                humanScore++;
+                result.innerText = `You won! ${playerChoice} beats ${computerChoice}.`;
+                matchResult(humanScore, computerScore);
+              }
+            else {
+                computerScore++;
+                result.innerText = `You lose! ${computerChoice} beats ${playerChoice}.`;
+                matchResult(humanScore, computerScore);
+                }
+
+            score.innerText = 'Player: ' + humanScore + '   Computer: ' + computerScore;
+        };
+
+        function resetGame () {
+            humanScore = 0;
+            computerScore = 0;
+            finalResult.innerText = "";
+        }
+
+        function matchResult (humanScore, computerScore) {
+            if (humanScore == 5) {
+                finalResult.innerText = "Victory!";
+            } else if (computerScore == 5) {
+                finalResult.innerText = "Defeat!";
+            }
+        }
+        
+
+    </script>
 </body>
 </html>
